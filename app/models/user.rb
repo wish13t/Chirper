@@ -5,4 +5,6 @@ class User
   field :email, type: String
 
   has_many :blogs
+  validates :name, presence: true
+  validates :email, presence: true
 end
