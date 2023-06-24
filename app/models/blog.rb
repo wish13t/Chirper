@@ -6,6 +6,5 @@ class Blog
   field :user_id, type: Integer
 
   belong_to :user
-  validates :content, length: { maximum: 1400 }
-                      presence: true
+  validates :content, length: { maximum: 1400 }, presence: true
 end
