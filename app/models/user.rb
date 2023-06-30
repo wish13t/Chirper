@@ -6,8 +6,10 @@ class User
   field :email, type: String
   field :password_digest, type: String
   field :remember_digest, type: String
+  field :admin, type: Boolean, default: false
 
-  # has_many :blogs
+  has_many :blogs, class_name: Blog, dependent: :destroy
+
   has_secure_password
   before_save { email.downcase! }
   validates :name, presence: true, length: { maximum: 50 }
@@ -15,7 +17,7 @@ class User
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
-  validates :password, presence: true, length: { minimum: 6 }
+  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
   class << self
     # Returns the hash digest of the given string.
@@ -45,5 +47,9 @@ class User
   # Forgets a user.
   def forget
     update_attribute(:remember_digest, nil)
+  end
+
+  def feed
+    Blog.where(user_id: id)
   end
 end

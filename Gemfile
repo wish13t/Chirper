@@ -34,6 +34,16 @@ gem 'bootstrap-sass'
 
 gem 'bcrypt'
 
+gem 'faker'
+
+gem "will_paginate_mongoid"
+
+gem 'bootstrap-will_paginate'
+
+gem "carrierwave-mongoid"
+
+gem 'mini_magick'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 

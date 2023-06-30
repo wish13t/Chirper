@@ -1,17 +1,16 @@
-<div id="<%= dom_id blog %>">
-  <p>
-    <strong>Title:</strong>
+<li id="blog-<%= blog.id %>">
+  <%= link_to gravatar_for(blog.user, size: 50), blog.user %>
+  <span class="user"><%= link_to blog.user.name, blog.user %></span>
+  <span class="content">
     <%= blog.title %>
-  </p>
-
-  <p>
-    <strong>Content:</strong>
     <%= blog.content %>
-  </p>
-
-  <p>
-    <strong>User:</strong>
-    <%= blog.user_id %>
-  </p>
-
-</div>
+    <%= image_tag blog.image.url if blog.image? %>
+  </span>
+  <span class="timestamp">
+    Posted <%= time_ago_in_words(blog.created_at) %> ago.
+    <% if current_user?(blog.user) %>
+      <%= link_to "delete", blog, method: :delete,
+                                       data: { confirm: "You sure?" } %>
+    <% end %>
+  </span>
+</li>

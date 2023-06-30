@@ -1,5 +1,8 @@
 class BlogsController < ApplicationController
   before_action :set_blog, only: %i[ show edit update destroy ]
+  before_action :logged_in_user, only: [:create, :destroy]
+  before_action :correct_user,   only: :destroy
+
 
   # GET /blogs or /blogs.json
   def index
@@ -21,16 +24,13 @@ class BlogsController < ApplicationController
 
   # POST /blogs or /blogs.json
   def create
-    @blog = Blog.new(blog_params)
-
-    respond_to do |format|
-      if @blog.save
-        format.html { redirect_to blog_url(@blog), notice: "Blog was successfully created." }
-        format.json { render :show, status: :created, location: @blog }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @blog.errors, status: :unprocessable_entity }
-      end
+    @blog = current_user.blogs.build(blog_params)
+    if @blog.save
+      flash[:success] = "blog created!"
+      redirect_to root_url
+    else
+      @feed_items = []
+      render 'static_pages/home'
     end
   end
 
@@ -50,11 +50,8 @@ class BlogsController < ApplicationController
   # DELETE /blogs/1 or /blogs/1.json
   def destroy
     @blog.destroy
-
-    respond_to do |format|
-      format.html { redirect_to blogs_url, notice: "Blog was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    flash[:success] = "blog deleted"
+    redirect_to request.referrer || root_url
   end
 
   private
@@ -66,5 +63,14 @@ class BlogsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def blog_params
       params.require(:blog).permit(:title, :content, :user_id)
+    end
+
+    def correct_user
+      @blog = current_user.blogs.find_by(id: params[:id])
+      redirect_to root_url if @blog.nil?
+    end
+
+    def blog_params
+      params.require(:blog).permit(:title, :content, :image)
     end
 end

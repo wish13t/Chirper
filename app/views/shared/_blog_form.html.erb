@@ -1,0 +1,23 @@
+<%= form_for(Blog.new, html: { multipart: true }, method: 'POST', url: blogs_path) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="field">
+    <%= f.text_field :title, placeholder: "Add title here..." %>
+  </div>
+
+  <div class="field">
+    <%= f.text_area :content, placeholder: "Compose new blog..." %>
+  </div>
+  <span class="image">
+    <%= f.file_field :image, :multiple => true, accept: 'image/jpeg,image/gif,image/png' %>
+  </span>
+  <%= f.submit "Post", class: "btn btn-primary" %>
+<% end %>
+
+<script type="text/javascript">
+  $('#blog_image').bind('change', function() {
+    var size_in_megabytes = this.files[0].size/1024/1024;
+    if (size_in_megabytes > 5) {
+      alert('Maximum file size is 5MB. Please choose a smaller file.');
+    }
+  });
+</script>

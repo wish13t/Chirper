@@ -1,6 +1,3 @@
-<p style="color: green"><%= notice %></p>
-
-<%= render @user %>
 <% provide(:title, @user.name) %>
 <div class="row">
   <aside class="col-md-4">
@@ -11,11 +8,13 @@
       </h1>
     </section>
   </aside>
-</div>
-
-<div>
-  <%= link_to "Edit this user", edit_user_path(@user) %> |
-  <%= link_to "Back to users", users_path %>
-
-  <%= button_to "Destroy this user", @user, method: :delete %>
+  <div class="col-md-8">
+    <% if @user.blogs.any? %>
+      <h3>blogs (<%= @user.blogs.count %>)</h3>
+      <ol class="blogs">
+        <%= render @blogs if @blogs.present? %>
+      </ol>
+      <%= will_paginate @blogs if @blogs.present?%>
+    <% end %>
+  </div>
 </div>
