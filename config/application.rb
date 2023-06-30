@@ -17,6 +17,7 @@ require "action_cable/engine"
 require 'carrierwave'
 require 'carrierwave/orm/activerecord'
 
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -36,6 +37,6 @@ module Chirper
 
     # Don't generate system test files.
     config.generators.system_tests = nil
-    config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths += %W(#{config.root}/app/uploaders)
   end
 end

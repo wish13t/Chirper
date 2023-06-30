@@ -60,11 +60,6 @@ class BlogsController < ApplicationController
       @blog = Blog.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
-    def blog_params
-      params.require(:blog).permit(:title, :content, :user_id)
-    end
-
     def correct_user
       @blog = current_user.blogs.find_by(id: params[:id])
       redirect_to root_url if @blog.nil?

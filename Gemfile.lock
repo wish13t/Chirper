@@ -247,6 +247,7 @@ DEPENDENCIES
   bootsnap
   bootstrap-sass
   bootstrap-will_paginate
+  carrierwave
   carrierwave-mongoid
   debug
   faker
