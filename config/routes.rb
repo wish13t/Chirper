@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :images
   get 'sessions/new'
   root             'public_pages#home'
   get 'help'    => 'public_pages#help'

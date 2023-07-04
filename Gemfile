@@ -40,9 +40,7 @@ gem "will_paginate_mongoid"
 
 gem 'bootstrap-will_paginate'
 
-gem 'carrierwave'
-
-gem "carrierwave-mongoid"
+gem 'mongoid-paperclip', require: 'mongoid_paperclip'
 
 gem 'mini_magick'
 
